@@ -1,0 +1,6 @@
+<launch>
+	<!--启动 hector.launch -->
+	<include file="$(find abot_slam)/launch/hector.launch"/>
+	<!-- 启动 rviz -->
+	<node pkg="rviz" type="rviz" name="rviz" args="-d $(find abot_slam)/rviz/abot_gmapping.rviz"/>
+</launch>

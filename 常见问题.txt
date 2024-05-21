@@ -1,0 +1,114 @@
+一键安装VScode
+sudo snap install --classic code
+
+
+授予所有文件和文件夹权限
+sudo chmod 777 -R *
+sudo chmod 777 -R src/
+
+python中文报错
+# -*- coding: utf-8 -*-
+
+c++中文报错
+setlocale(LC_CTYPE, "zh_CN.utf8");
+setlocale(LC_ALL, "");
+
+启动urdf的launch时报错
+	问题描述：启动urdf的launch时报错：Could not find the GUI, install the ‘joint_state_publisher_gui’ package.
+	解决方式：
+		$ sudo apt-get install ros-kinetic-joint-state-publisher-gui
+
+	问题描述：这个安装好后，运行之前的urdf文件，发现出现一个warning如下：
+		[WARN] [1653658952.239812]: The ‘use_gui’ parameter was specified, which is deprecated. 
+		We’ll attempt to find and run the GUI,
+		but if this fails you should install the ‘joint_state_publisher_gui’ package instead and run that.
+		This backwards compatibility option will be removed in Noetic.
+	解决方式：
+		将urdf文件中的joint_state_publisher用joint_state_publisher_gui替换掉。重新执行urdf错误和警告都解除。
+
+gazebo问题
+	问题描述：VMware: vmw_ioctl_command error 无效的参数.
+	解决参数：
+	vmware虚拟机中运行的，可以通过关闭3D加速来解决
+
+	问题描述：在首次在 ROS 中打开 Gazebo 时，出现 Err] [REST.cc:205] Error in REST request 的红色错误警告
+	解决方式：修改.ignition/fuel/config.yaml 文件
+		打开yaml文件命令：sudo gedit ~/.ignition/fuel/config.yaml
+		将 url : https://api.ignitionfuel.org 用 # 注释掉
+		然后添加 url: https://api.ignitionrobotics.org
+		其中需要注意的是，url和name必须要对齐
+
+	问题描述：加载模型出现warn如下：
+		[ WARN] [1712333716.857384289, 0.168000000]: GazeboRosSkidSteerDrive Plugin (ns = //) missing <covariance_x>, defaults to 0.000100
+		[ WARN] [1712333716.857442528, 0.168000000]: GazeboRosSkidSteerDrive Plugin (ns = //) missing <covariance_y>, defaults to 0.000100
+		[ WARN] [1712333716.857452230, 0.168000000]: GazeboRosSkidSteerDrive Plugin (ns = //) missing <covariance_yaw>, defaults to 0.010000
+	解决方法：无伤大雅，小问题。
+ 	
+	问题描述：在gazebo中加入任意模型，然后点击save world as然后卡死的问题
+	解决方法：
+		运行gazebo之前先运行 sudo -s 再运行launch文件
+
+
+第九章问题
+	错误参数：costmap_common_params_abot.yaml中map_type: voxela
+	正确参数：map_type: voxel
+
+	问题描述：运行 nav.launch 报错：global_costmap: Pre-Hydro parameter "static_map" unused since "plugins" is provided
+	问题原因：这个警告表明在配置全局代价地图时，参数 "static_map" 被忽略了，
+		因为提供了参数 "plugins"。在ROS（Robot Operating System）中，
+		全局代价地图通常使用 costmap_2d 包来实现，
+		而 "static_map" 参数用于指定是否使用静态地图服务加载地图数据。
+		然而，当你提供了 "plugins" 参数时，它指定了要加载的插件类型和配置，
+		其中包括代价地图的类型以及其他相关信息。因此，"static_map" 参数被忽略，
+		因为插件配置提供了更详细的地图加载方式和设置。
+	解决方式：删除  static_map: true
+
+	问题描述：运行 nav.launch 报错：global_costmap: Pre-Hydro parameter "map_type" unused since "plugins" is provided
+	解决方式：删除 map_type: voxel
+
+	问题描述：运行 nav.launch 报错： terminate called after throwing an instance of 'pluginlib::LibraryLoadException'what():  
+		According to the loaded plugin descriptions the class costmap_2d::InflatioanLayer with base class type costmap_2d::Layer does not exist. 
+		Declared types are  costmap_2d::InflationLayer costmap_2d::ObstacleLayer costmap_2d::StaticLayer costmap_2d::VoxelLayer
+	解决方法：应该将 "InflatioanLayer" 更正为 "InflationLayer"。
+
+	问题描述：[ WARN] [1712398793.274107765, 4642.367000000]: Parameter max_trans_vel is deprecated (and will not load properly). Use max_vel_trans instead.
+		[ WARN] [1712398793.274450757, 4642.367000000]: Parameter min_trans_vel is deprecated (and will not load properly). Use min_vel_trans instead.
+		[ WARN] [1712398793.274693011, 4642.367000000]: Parameter max_rot_vel is deprecated (and will not load properly). Use max_vel_theta instead.
+		[ WARN] [1712398793.275077211, 4642.368000000]: Parameter min_rot_vel is deprecated (and will not load properly). Use min_vel_theta instead.
+		[ WARN] [1712398793.275726488, 4642.368000000]: Parameter rot_stopped_vel is deprecated (and will not load properly). Use theta_stopped_vel instead.
+	解决方法：max_trans_vel 应该替换为 max_vel_trans
+		min_trans_vel 应该替换为 min_vel_trans
+		max_rot_vel 应该替换为 max_vel_theta
+		min_rot_vel 应该替换为 min_vel_theta
+		rot_stopped_vel 应该替换为 theta_stopped_vel
+
+	问题描述：运行 nav.launch 报错： failed to open image file "/home/abot/catkin_ws/src/abot_slam/maps/catkin_ws/src/abot_slam/maps/map.pgm": 
+		Couldn't open /home/abot/catkin_ws/src/abot_slam/maps/catkin_ws/src/abot_slam/maps/map.pgm
+	解决方法：找到map.ymal文件，删除多余的catkin_ws/src/abot_slam/maps/，即可。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,11 @@
+<launch>
+	<param name="robot_description" textfile="$(find abot_description)/urdf/abot_with_laser.urdf" />
+	<!--设置 GUI 参数，显示关节控制插件 -->
+	<param name="use_gui" value="true"/>
+	<!-- 运动 joint_state_publisher 节点，发布机器人关节状态 -->
+	<node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+	<!-- 运行 robot_state_publisher 节点，发布 TF -->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+	<!-- 运行 RVIZ 可视化界面 -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find abot_description)/config/abot.rviz" required="true" />
+</launch>

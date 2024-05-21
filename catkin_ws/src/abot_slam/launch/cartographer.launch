@@ -1,0 +1,15 @@
+<launch>
+	<!--使用虚拟机 use_sim_time 为 true 实体机为 false -->
+	<param name="use_sim_time" value="true" />
+
+	<!--启动 cartographer 节点，调用 abot.lua 配置文件 -->
+	<node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node" args="-configuration_directory $(find abot_slam)/config -configuration_basename abot.lua" output="screen">
+	<remap from="sacn" to="scan"/>
+	</node>
+
+	<!--启动 rviz 显示界面节点 -->
+	<node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find cartographer_ros)/configuration_files/demo_2d.rviz"/>
+</launch>
+
+
+

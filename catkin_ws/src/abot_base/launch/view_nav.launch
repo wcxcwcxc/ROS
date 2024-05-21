@@ -1,0 +1,5 @@
+<launch>
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(find abot_base)/rviz/abot_navigation.rviz" />
+</launch>
+
+
